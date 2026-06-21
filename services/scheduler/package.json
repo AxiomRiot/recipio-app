@@ -1,0 +1,21 @@
+{
+  "name": "scheduler",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js",
+    "test": "jest"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "Task scheduler service",
+  "dependencies": {
+    "dotenv": "^16.4.7",
+    "node-cron": "^3.0.2"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "nodemon": "^3.1.9"
+  }
+}
