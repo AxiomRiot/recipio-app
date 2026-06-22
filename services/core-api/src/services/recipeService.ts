@@ -1,3 +1,4 @@
+import { logger } from '../../../../packages/shared/logger';
 import type { RecipeParsedEvent, ScrapeRequestEvent } from '../../../../packages/types/events';
 import type { EventProducer } from '../kafka/producer';
 
@@ -9,6 +10,7 @@ export class RecipeService {
   }
 
   public async sendScrapeRequest(url: string) {
+    logger.info(`Publishing scrape request event for URL: ${url}`);
     const event: ScrapeRequestEvent = {
       header: {
         event_id: crypto.randomUUID(),

@@ -1,0 +1,14 @@
+{
+  "name": "@recipe-app/shared",
+  "version": "1.0.0",
+  "description": "Shared utilities and libraries",
+  "exports": {
+    "./logger": "./logger.ts"
+  },
+  "dependencies": {
+    "winston": "^3.17.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.4.0"
+  }
+}
