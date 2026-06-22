@@ -1,0 +1,15 @@
+# infra/kafka/topics.yml
+# Canonical topic configuration for the recipe-app Kafka cluster.
+# Run create-topics.sh after `docker compose up` to apply.
+
+topics:
+  - name: scrape-requested
+    partitions: 3
+    replication_factor: 1
+    retention_ms: 604800000
+    cleanup_policy: delete
+  - name: recipe-parsed
+    partitions: 3
+    replication_factor: 1
+    retention_ms: 604800000
+    cleanup_policy: delete

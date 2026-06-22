@@ -1,0 +1,3 @@
+include:
+  - path: docker-compose.kafka.yml
+  - path: docker-compose.service.yml

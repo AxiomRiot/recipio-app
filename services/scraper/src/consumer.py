@@ -1,36 +1,52 @@
 from confluent_kafka import Consumer, KafkaError
-from schemas import ScrapeRequestEvent
-import json
+from pydantic import ValidationError
+from schemas import ScrapeRequestedEventSchema
+from producer import ScraperProducer
+from parser import RecipeParser
+from logger import get_color_logger
 
-config = {
-  'bootstrap.servers': 'localhost:9092',
-  'group.id': 'python-consumer-group',  # Defines the consumer group instance
-  'auto.offset.reset': 'earliest'        # Start reading from the beginning if no offset exists
-}
+logger = get_color_logger("ScraperService")
 
-consumer = Consumer(config)
-consumer.subscribe('scrape-requested')
+class ScraperConsumer:
+  running = False
+  polling_timeout_sec = 1.0
 
-try:
-  while True:
-    # Poll for new messages (timeout in seconds)
-    msg = consumer.poll(timeout=1.0)
+  def __init__(self, config, polling_timeout_sec, parser, producer):
+    self.consumer = Consumer(config)
+    self.polling_timeout_sec = polling_timeout_sec
+    self.parser = parser
+    self.producer = producer
 
-    if msg is None:
-      continue
-    if msg.error():
-      if msg.error().code() == KafkaError._PARTITION_EOF:
-        # Reached the end of the partition
+  def subscribe(self, topic):
+    self.consumer.subscribe([topic])
+
+    self.running = True
+    while self.running:
+      raw = self.consumer.poll(timeout=self.polling_timeout_sec)
+
+      if raw is None:
         continue
-      else:
-          print(f"Consumer error: {msg.error()}")
-          break
+      if raw.error():
+        if raw.error().code() == KafkaError._PARTITION_EOF:
+          # Reached end of the partition
+          continue
+        else:
+          logger.error(f"Consumer error: {raw.error()}")
 
-    # Process the valid message
-    print(f"Received message: Key={msg.key().decode('utf-8')} Value={msg.value().decode('utf-8')}")
+      data = raw.value.decode('utf-8')
+      logger.debug(f"Received message: Key={raw.key().decode('utf-8')} Value={data}")
 
-except KeyboardInterrupt:
-    pass
-finally:
-    # Close down consumer cleanly to commit final offsets
-    consumer.close()
+      try:
+        scrape_request = ScrapeRequestedEventSchema(**data)
+
+        logger.info(f"Received scrape request for url: {scrape_request.url}")
+        recipe = self.parser.scrape_url(scrape_request.url)
+
+        self.producer.send_event("recipe-parsed", recipe)
+
+      except ValidationError as e:
+        logger.error(e.errors())
+
+  def stop(self):
+    self.running = False
+    self.consumer.close()

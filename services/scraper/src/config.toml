@@ -1,0 +1,8 @@
+[producer]
+server = "kafka:9092"
+client_id = "recipe-scraper"
+
+[consumer]
+server = "kafka:9092"
+group_id = "recipe-scraper"
+polling_interval_sec = 1.0

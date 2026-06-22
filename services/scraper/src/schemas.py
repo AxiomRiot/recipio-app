@@ -1,39 +1,30 @@
 from typing import Optional
 from pydantic import BaseModel
-import datetime
 
-class ScrapeRequestPayload(BaseModel):
-  url: str
-  user_id: str
-
-class ScrapeRequestEvent(BaseModel):
+class EventHeaderSchema(BaseModel):
   event_id: str
+  timestamp: str
+
+class ScrapeRequestedEventSchema(BaseModel):
+  header: EventHeaderSchema
   event_type: str = "scrape-requested"
-  timestamp: datetime
-  payload: ScrapeRequestPayload
+  url: str
 
 class Ingredient(BaseModel):
   name: str
   quantity: float
   unit: Optional[str] = None
 
-class Duration(BaseModel):
-  days: str
-  hours: str
-  minutes: str
-
 class RecipeParsedPayload(BaseModel):
   title: str
   url: str
   description: str
   servings: str
-  duration: Duration
+  duration: dict[str, str]
   ingredients: list[Ingredient]
   steps: list[str]
-  image: list[float]
 
-class RecipeParsedEvent(BaseModel):
-  event_id: str
+class RecipeParsedEventSchema(BaseModel):
+  header: EventHeaderSchema
   event_type: str = "recipe-parsed"
-  timestamp: datetime
   payload: RecipeParsedPayload

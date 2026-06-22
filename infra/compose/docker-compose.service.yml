@@ -1,0 +1,9 @@
+services:
+  scraper:
+    build:
+      context: ../../services/scraper/
+      dockerfile: Dockerfile
+    depends_on:
+      - kafka
+    ports:
+      - "8080:3000"

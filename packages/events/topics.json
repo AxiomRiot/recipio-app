@@ -1,3 +1,4 @@
 {
-  "SCRAPE_REQUESTED": "scrape-requested"
+  "SCRAPE_REQUESTED": "scrape-requested",
+  "RECIPE_PARSED": "recipe-parsed"
 }

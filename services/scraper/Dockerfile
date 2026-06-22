@@ -6,8 +6,11 @@ WORKDIR /app
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy source code
+# Copy source code and configuration
+COPY src/config.toml ./
 COPY src/ ./src/
 
 # Run consumer
-CMD ["python", "src/consumer.py"]
+# CMD ["python", "src/main.py"]
+CMD ["tail", "-f", "/dev/null"]
+
