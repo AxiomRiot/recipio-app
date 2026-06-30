@@ -1,6 +1,5 @@
-// producer.ts
+import type { EventPayloadMap } from '@recipe-app/types/events';
 import type { Producer } from 'kafkajs';
-import type { EventPayloadMap } from '../../../../packages/types/events';
 import { Kafka } from 'kafkajs';
 
 export class EventProducer {

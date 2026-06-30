@@ -1,5 +1,5 @@
-import { logger } from '../../../packages/shared/logger';
 import { app } from './app';
+import { logger } from './logger';
 
 const port = 8080;
 

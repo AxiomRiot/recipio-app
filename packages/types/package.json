@@ -1,0 +1,10 @@
+{
+  "name": "@recipe-app/types",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Shared type definitions and functions",
+  "exports": {
+    "./events": "./events.ts",
+    "./topics": "./topics.ts"
+  }
+}

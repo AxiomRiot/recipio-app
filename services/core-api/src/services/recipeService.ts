@@ -1,6 +1,6 @@
-import { logger } from '../../../../packages/shared/logger';
-import type { RecipeParsedEvent, ScrapeRequestEvent } from '../../../../packages/types/events';
+import type { RecipeParsedEvent, ScrapeRequestEvent } from '@recipe-app/types/events';
 import type { EventProducer } from '../kafka/producer';
+import { logger } from '../logger';
 
 export class RecipeService {
   private producer: EventProducer;

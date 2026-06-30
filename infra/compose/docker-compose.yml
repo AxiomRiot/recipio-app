@@ -1,3 +1,4 @@
 include:
   - path: docker-compose.kafka.yml
   - path: docker-compose.service.yml
+  - path: docker-compose.logging.yml

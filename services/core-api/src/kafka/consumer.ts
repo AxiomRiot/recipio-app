@@ -1,9 +1,10 @@
-// consumer.ts
+import type { EventPayloadMap } from '@recipe-app/types/events';
+import type { TopicName } from '@recipe-app/types/topics';
 import type { Consumer } from 'kafkajs';
-import type { EventPayloadMap } from '../../../../packages/types/events';
-import type { TopicName } from '../../../../packages/types/topics';
+import { EventSchemasByTopic } from '@recipe-app/types/events';
 import { Kafka } from 'kafkajs';
-import { EventSchemasByTopic } from '../../../../packages/types/events';
+import { logger } from './logger';
+
 
 export type MessageHandler<T extends keyof EventPayloadMap = keyof EventPayloadMap> = (
   topic: T,
@@ -46,7 +47,7 @@ export class EventConsumer {
           raw = JSON.parse(message.value!.toString());
         }
         catch (err) {
-          console.error(`[EventConsumer] Failed to parse message on ${topic}`, err);
+          logger.error(`[EventConsumer] Failed to parse message on ${topic}`, err);
           return;
         }
 
@@ -54,7 +55,7 @@ export class EventConsumer {
         const result = schema.safeParse(raw);
 
         if (!result.success) {
-          console.error(`[EventConsumer] Schema validation failed on ${topic}`, result.error);
+          logger.error(`[EventConsumer] Schema validation failed on ${topic}`, result.error);
           return;
         }
 
@@ -62,7 +63,7 @@ export class EventConsumer {
           await handler(topic as T, result.data as EventPayloadMap[T], { key });
         }
         catch (err) {
-          console.error(`[EventConsumer] Handler failed for ${topic}`, err);
+          logger.error(`[EventConsumer] Handler failed for ${topic}`, err);
           throw err;
         }
       },

@@ -1,0 +1,17 @@
+{
+  "name": "@recipe-app/logger-ts",
+  "type": "module",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Logger utility",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "main": "./src/index.ts",
+  "dependencies": {
+    "winston": "^3.17.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.4.0"
+  }
+}

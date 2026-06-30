@@ -1,6 +1,6 @@
 import process from 'node:process';
+import { Topics } from '@recipe-app/types/topics';
 import express from 'express';
-import { Topics } from '../../../packages/types/topics';
 import { RecipeController } from './controllers/recipeController';
 import { EventConsumer } from './kafka/consumer';
 import { EventProducer } from './kafka/producer';
