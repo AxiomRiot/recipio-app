@@ -3,8 +3,7 @@ import type { TopicName } from '@recipe-app/types/topics';
 import type { Consumer } from 'kafkajs';
 import { EventSchemasByTopic } from '@recipe-app/types/events';
 import { Kafka } from 'kafkajs';
-import { logger } from './logger';
-
+import { logger } from '../logger';
 
 export type MessageHandler<T extends keyof EventPayloadMap = keyof EventPayloadMap> = (
   topic: T,

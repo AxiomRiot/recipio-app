@@ -1,27 +1,21 @@
 services:
   scraper:
     build:
-      context: .
+      context: ../..
       dockerfile: services/scraper/Dockerfile
-    depends_on:
-      - kafka
     ports:
       - "8080:3000"
   core-api:
     build:
       context: ../..
       dockerfile: services/core-api/Dockerfile
-    image: ghcr.io/AxiomRiot/recipe-app-core-api:latest
     environment:
       - NODE_ENV=development
       - PORT=3000
       - KAFKA_BROKERS=kafka:9092
       - LOG_LEVEL=info
-    depends_on:
-      kafka:
-        condition: service_healthy
     ports:
-      - "8080:3000"
+      - "8081:3000"
     restart: unless-stopped
     # healthcheck:
     #   test: ["CMD", "curl", "-f", "http://localhost:3000/health"]

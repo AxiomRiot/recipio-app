@@ -1,7 +1,7 @@
 from producer import ScraperProducer
 from consumer import ScraperConsumer
 from parser import RecipeParser
-from logger import get_color_logger
+from logger import get_json_logger
 
 import tomllib
 from pathlib import Path
@@ -13,7 +13,7 @@ def load_config(file_name="config.toml"):
       return tomllib.load(f)
 
 def main():
-  logger = get_color_logger("ScraperService")
+  logger = get_json_logger("ScraperService")
   logger.info("Starting up ScraperService")
 
   config = load_config()

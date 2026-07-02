@@ -1,8 +1,8 @@
 import json
 from confluent_kafka import Producer
-from logger import get_color_logger
+from logger import get_json_logger
 
-logger = get_color_logger("ScraperService")
+logger = get_json_logger("ScraperService")
 
 class ScraperProducer:
     def __init__(self, config):

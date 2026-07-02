@@ -3,9 +3,9 @@ from pydantic import ValidationError
 from schemas import ScrapeRequestedEventSchema
 from producer import ScraperProducer
 from parser import RecipeParser
-from logger import get_color_logger
+from logger import get_json_logger
 
-logger = get_color_logger("ScraperService")
+logger = get_json_logger("ScraperService")
 
 class ScraperConsumer:
   running = False

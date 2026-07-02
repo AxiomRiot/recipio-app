@@ -6,17 +6,12 @@ WORKDIR /app
 # the cached npm install layer
 FROM base AS deps
 
-# root manifest
-COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
+COPY package.json pnpm-lock.yaml pnpm-workspace.yaml tsconfig.json ./
+COPY packages/logger-ts/package.json ./packages/logger-ts/package.json
+COPY packages/types/package.json ./packages/types/package.json
+COPY services/core-api/package.json ./services/core-api/package.json
 
-# shared packages
-COPY packages/loggers-ts/package.json ./packages/logger-ts
-COPY packages/types/package.json ./packages/types
-
-# service
-COPY services/core-api/package.json ./services/core-api/
-
-RUN npm install -g pnpm && pnpm install --frozen-lockfile
+RUN npm install -g pnpm && pnpm install --frozen-lockfile --ignore-scripts
 
 # BUILD STAGE
 FROM deps AS build
@@ -24,6 +19,7 @@ FROM deps AS build
 # shared src
 COPY packages/logger-ts ./packages/logger-ts
 COPY packages/types/ ./packages/types
+COPY packages/events ./packages/events
 
 # service
 COPY services/core-api ./services/core-api
@@ -36,8 +32,10 @@ FROM base AS production
 ENV NODE_ENV=production
 
 COPY --from=build /app/node_modules ./node_modules
-COPY --from=build /app/services/core-api/dist ./dist
+COPY --from=build /app/services/core-api ./app
 COPY --from=build /app/packages ./packages
+
+WORKDIR /app
 
 EXPOSE 3000
 
