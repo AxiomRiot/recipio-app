@@ -1,6 +1,7 @@
 import type { EventPayloadMap } from '@recipe-app/types/events';
 import type { TopicName } from '@recipe-app/types/topics';
 import type { Consumer } from 'kafkajs';
+import process from 'node:process';
 import { EventSchemasByTopic } from '@recipe-app/types/events';
 import { Kafka } from 'kafkajs';
 import { logger } from '../logger';
@@ -17,7 +18,7 @@ export class EventConsumer {
 
   constructor(groupId: string) {
     const kafka = new Kafka({
-      brokers: ['localhost:9092'],
+      brokers: [process.env.KAFKA_BROKER || 'localhost:9092'],
     });
 
     this.mConsumer = kafka.consumer({ groupId });
@@ -31,9 +32,6 @@ export class EventConsumer {
   }
 
   public async subscribe<T extends TopicName>(topics: T[], handler: MessageHandler): Promise<void> {
-    if (!this.mConnected)
-      throw new Error('[EventConsumer] Consumer not connected — call connect() first');
-
     await this.mConsumer.connect();
     await this.mConsumer.subscribe({ topics });
 

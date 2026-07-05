@@ -20,7 +20,7 @@ class RecipeParsedPayload(BaseModel):
   url: str
   description: str
   servings: str
-  duration: dict[str, str]
+  duration: dict[str, int]
   ingredients: list[Ingredient]
   steps: list[str]
 

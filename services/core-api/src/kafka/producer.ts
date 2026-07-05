@@ -24,7 +24,7 @@ export class EventProducer {
 
   public async sendEvent<T extends keyof EventPayloadMap = keyof EventPayloadMap>(topic: T, event: EventPayloadMap[T]) {
     if (!this.mConnected)
-      throw new Error('Producer not connected — call connect() first');
+      await this.connect();
 
     await this.mProducer.send({
       topic,

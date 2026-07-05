@@ -1,7 +1,7 @@
 import { app } from './app';
 import { logger } from './logger';
 
-const port = 8080;
+const port = 1234;
 
 logger.info('Starting Application');
 

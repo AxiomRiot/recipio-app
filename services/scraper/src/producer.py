@@ -13,15 +13,16 @@ class ScraperProducer:
       if err is not None:
           logger.error(f"Message delivery failed: {err}")
       else:
-          logger.error(f"Message delivered to {msg.topic()} [{msg.partition()}]")
+          logger.info(f"Message delivered to {msg.topic()} [{msg.partition()}]")
     
     def send_event(self, topic, event):
       event_json = event.model_dump_json()
-      logger.info(f"Sending event with key {event.event_id}: {event_json}")
+      event_id = event.header.event_id
+      logger.info(f"Sending event with key {event_id}: {event_json}")
 
       self.producer.produce(
         topic=topic,
-        key=str(event.event_id),
+        key=str(event_id),
         value=event_json.encode('utf-8'),
         callback=self.delivery_report 
       )

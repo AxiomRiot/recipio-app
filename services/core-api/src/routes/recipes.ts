@@ -4,11 +4,14 @@ import express from 'express';
 
 export class RecipeRouter {
   private router: Router;
+  private controller: RecipeController;
 
-  constructor(private controller: RecipeController) {
+  constructor(private control: RecipeController) {
     this.router = express.Router();
+    this.controller = control;
 
-    this.router.post('/recipe', controller.sendScrapeRequest);
+    // Bind the controller method so `this` refers to the controller instance
+    this.router.post('/recipe', this.controller.sendScrapeRequest.bind(this.controller));
   }
 
   public getRouter(): Router {

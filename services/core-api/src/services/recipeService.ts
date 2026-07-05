@@ -9,6 +9,10 @@ export class RecipeService {
     this.producer = producer;
   }
 
+  public testEvent() {
+    logger.info('Service called correctly');
+  }
+
   public async sendScrapeRequest(url: string) {
     logger.info(`Publishing scrape request event for URL: ${url}`);
     const event: ScrapeRequestEvent = {
@@ -24,6 +28,6 @@ export class RecipeService {
   }
 
   public async handleRecipeParsedEvent(event: RecipeParsedEvent): Promise<void> {
-    await console.warn(event);
+    logger.info(event);
   }
 }

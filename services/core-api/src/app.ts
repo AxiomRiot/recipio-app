@@ -4,12 +4,15 @@ import express, { Router } from 'express';
 import { RecipeController } from './controllers/recipeController';
 import { EventConsumer } from './kafka/consumer';
 import { EventProducer } from './kafka/producer';
+import { logger } from './logger';
 import { healthRouter } from './routes/health';
 import { RecipeRouter } from './routes/recipes';
 import { RecipeService } from './services/recipeService';
 
 const brokerAddress = process.env.KAFKA_BROKER || 'localhost:9092';
 const groupId = process.env.KAFKA_GROUP_ID || 'core-api';
+
+logger.info(`Connecting to Kafka broker at ${brokerAddress}`);
 
 // Producers
 const scrapRecipeEventProducer: EventProducer

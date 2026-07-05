@@ -1,3 +1,5 @@
+import json
+
 from confluent_kafka import Consumer, KafkaError
 from pydantic import ValidationError
 from schemas import ScrapeRequestedEventSchema
@@ -33,11 +35,13 @@ class ScraperConsumer:
         else:
           logger.error(f"Consumer error: {raw.error()}")
 
-      data = raw.value.decode('utf-8')
+      data = raw.value().decode('utf-8')
+      logger.info(data)
       logger.debug(f"Received message: Key={raw.key().decode('utf-8')} Value={data}")
 
       try:
-        scrape_request = ScrapeRequestedEventSchema(**data)
+        payload = json.loads(data)
+        scrape_request = ScrapeRequestedEventSchema.model_validate(payload)
 
         logger.info(f"Received scrape request for url: {scrape_request.url}")
         recipe = self.parser.scrape_url(scrape_request.url)

@@ -24,19 +24,22 @@ COPY packages/events ./packages/events
 # service
 COPY services/core-api ./services/core-api
 
-# only run pnpm against core-api service and deps
-RUN pnpm --filter core-api build
+# build shared workspace packages first, then core-api
+RUN pnpm --filter @recipe-app/logger-ts build && \
+    pnpm --filter @recipe-app/types build && \
+    pnpm --filter core-api build
 
 # PRODUCTION STAGE
 FROM base AS production
 ENV NODE_ENV=production
 
-COPY --from=build /app/node_modules ./node_modules
-COPY --from=build /app/services/core-api ./app
-COPY --from=build /app/packages ./packages
+COPY --from=build /app/node_modules ./app/node_modules
+COPY --from=build /app/services/core-api/node_modules ./app/services/core-api/node_modules
+COPY --from=build /app/services/core-api/dist ./app/services/core-api/dist
+COPY --from=build /app/packages ./app/packages
 
 WORKDIR /app
 
-EXPOSE 3000
+EXPOSE 1234
 
-CMD ["tail", "-f", "/dev/null"]
+CMD ["node", "./app/services/core-api/dist/index.js"]

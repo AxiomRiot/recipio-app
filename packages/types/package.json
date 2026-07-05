@@ -2,12 +2,18 @@
   "name": "@recipe-app/types",
   "version": "1.0.0",
   "private": true,
+  "type": "commonjs",
   "description": "Shared type definitions and functions",
   "dependencies": {
     "zod": "^4.4.3"
   },
+  "scripts": {
+    "build": "tsc -p ."
+  },
   "exports": {
-    "./events": "./events.ts",
-    "./topics": "./topics.ts"
-  }
+    "./events": "./dist/events.js",
+    "./topics": "./dist/topics.js"
+  },
+  "main": "./dist/topics.js",
+  "types": "./dist/topics.d.ts"
 }
