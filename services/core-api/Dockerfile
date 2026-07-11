@@ -8,7 +8,7 @@ FROM base AS deps
 
 COPY package.json pnpm-lock.yaml pnpm-workspace.yaml tsconfig.json ./
 COPY packages/logger-ts/package.json ./packages/logger-ts/package.json
-COPY packages/types/package.json ./packages/types/package.json
+COPY packages/types-ts/package.json ./packages/types-ts/package.json
 COPY services/core-api/package.json ./services/core-api/package.json
 
 RUN npm install -g pnpm && pnpm install --frozen-lockfile --ignore-scripts
@@ -18,15 +18,14 @@ FROM deps AS build
 
 # shared src
 COPY packages/logger-ts ./packages/logger-ts
-COPY packages/types/ ./packages/types
-COPY packages/events ./packages/events
+COPY packages/types-ts/ ./packages/types-ts
 
 # service
 COPY services/core-api ./services/core-api
 
 # build shared workspace packages first, then core-api
 RUN pnpm --filter @recipe-app/logger-ts build && \
-    pnpm --filter @recipe-app/types build && \
+    pnpm --filter @recipe-app/types-ts build && \
     pnpm --filter core-api build
 
 # PRODUCTION STAGE

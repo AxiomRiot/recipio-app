@@ -15,7 +15,7 @@
   },
   "dependencies": {
     "@recipe-app/logger-ts": "workspace:*",
-    "@recipe-app/types": "workspace:*",
+    "@recipe-app/types-ts": "workspace:*",
     "axios": "^1.7.9",
     "chalk": "^5.4.1",
     "cheerio": "^1.0.0",

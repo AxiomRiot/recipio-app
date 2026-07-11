@@ -1,6 +1,7 @@
 from producer import ScraperProducer
 from consumer import ScraperConsumer
 from parser import RecipeParser
+from coordinator import ScraperCoordinator
 from logger import get_json_logger
 
 import tomllib
@@ -14,7 +15,7 @@ def load_config(file_name="config.toml"):
 
 def main():
   logger = get_json_logger("ScraperService")
-  logger.info("Starting up ScraperService")
+  logger.info("Configuring ScraperService")
 
   config = load_config()
 
@@ -30,11 +31,15 @@ def main():
       'auto.offset.reset': 'earliest' 
     },
     polling_timeout_sec=config["consumer"]["polling_interval_sec"],
-    parser=recipe_parser,
-    producer=scraper_producer 
   )
   
-  scraper_consumer.subscribe("scrape-requested")
+  coordinator = ScraperCoordinator(
+    scraper_consumer,
+    recipe_parser,
+    scraper_producer
+  )
+
+  coordinator.start()
 
 if __name__ == '__main__':
   main()

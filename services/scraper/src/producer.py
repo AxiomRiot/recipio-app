@@ -26,4 +26,4 @@ class ScraperProducer:
         value=event_json.encode('utf-8'),
         callback=self.delivery_report 
       )
-      self.producer.flush()   
+      self.producer.flush()

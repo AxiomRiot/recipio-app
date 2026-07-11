@@ -1,4 +1,4 @@
-import type { EventPayloadMap } from '@recipe-app/types/events';
+import type { EventPayloadMap } from '@recipe-app/types-ts/events';
 import type { Producer } from 'kafkajs';
 import { Kafka } from 'kafkajs';
 

@@ -1,5 +1,5 @@
 import process from 'node:process';
-import { Topics } from '@recipe-app/types/topics';
+import { Topics } from '@recipe-app/types-ts/topics';
 import express, { Router } from 'express';
 import { RecipeController } from './controllers/recipeController';
 import { EventConsumer } from './kafka/consumer';

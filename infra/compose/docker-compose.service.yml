@@ -3,12 +3,18 @@ services:
     build:
       context: ../..
       dockerfile: services/scraper/Dockerfile
+    depends_on:
+      create-topics:
+        condition: service_completed_successfully
     ports:
       - "8080:3000"
   core-api:
     build:
       context: ../..
       dockerfile: services/core-api/Dockerfile
+    depends_on:
+      create-topics:
+        condition: service_completed_successfully
     environment:
       - NODE_ENV=development
       - PORT=3000

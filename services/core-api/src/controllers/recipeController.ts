@@ -15,6 +15,7 @@ export class RecipeController {
 
     try {
       await this.service.sendScrapeRequest(url);
+
       res.status(201).send();
     }
     catch (error) {

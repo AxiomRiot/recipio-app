@@ -1,5 +1,4 @@
-from schemas import EventHeaderSchema
-from schemas import RecipeParsedEventSchema, RecipeParsedPayload, EventHeaderSchema
+from py_utils.schema.RecipeParsedEvent import RecipeParsedEvent, Header, Payload
 from datetime import datetime
 import uuid
 
@@ -8,15 +7,13 @@ class RecipeParser:
     pass
   
   def scrape_url(self, url):
-    event_header = EventHeaderSchema(
-      event_id=str(uuid.uuid4()),
-      timestamp=datetime.now().strftime("%Y-%m-%d")
-    )
-
-    return RecipeParsedEventSchema(
-      header=event_header,
+    return RecipeParsedEvent(
+      header=Header(
+        event_id=str(uuid.uuid4()),
+        timestamp=datetime.now().strftime("%Y-%m-%d")
+      ),
       event_type="recipe-parsed",
-      payload=RecipeParsedPayload(
+      payload=Payload(
         title="test",
         url=url,
         description="",

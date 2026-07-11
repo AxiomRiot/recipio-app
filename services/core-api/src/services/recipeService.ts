@@ -1,4 +1,4 @@
-import type { RecipeParsedEvent, ScrapeRequestEvent } from '@recipe-app/types/events';
+import type { RecipeParsedEvent, ScrapeRequestEvent } from '@recipe-app/types-ts/events';
 import type { EventProducer } from '../kafka/producer';
 import { logger } from '../logger';
 
@@ -14,17 +14,19 @@ export class RecipeService {
   }
 
   public async sendScrapeRequest(url: string) {
+    const date = new Date();
+
     logger.info(`Publishing scrape request event for URL: ${url}`);
     const event: ScrapeRequestEvent = {
       header: {
         event_id: crypto.randomUUID(),
-        timestamp: Date.now().toLocaleString(),
+        timestamp: date.toISOString(),
       },
       event_type: 'scrape-requested',
       url,
     };
 
-    this.producer.sendEvent('scrape-requested', event);
+    await this.producer.sendEvent('scrape-requested', event);
   }
 
   public async handleRecipeParsedEvent(event: RecipeParsedEvent): Promise<void> {

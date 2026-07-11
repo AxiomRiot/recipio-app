@@ -1,8 +1,8 @@
-import type { EventPayloadMap } from '@recipe-app/types/events';
-import type { TopicName } from '@recipe-app/types/topics';
+import type { EventPayloadMap } from '@recipe-app/types-ts/events';
+import type { TopicName } from '@recipe-app/types-ts/topics';
 import type { Consumer } from 'kafkajs';
 import process from 'node:process';
-import { EventSchemasByTopic } from '@recipe-app/types/events';
+import { EventSchemasByTopic } from '@recipe-app/types-ts/events';
 import { Kafka } from 'kafkajs';
 import { logger } from '../logger';
 
