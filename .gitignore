@@ -131,3 +131,10 @@ dist
 
 *.bkp
 .obsidian
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyc
+*.cpython-313.pyc

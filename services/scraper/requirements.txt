@@ -1,3 +1,7 @@
 -e ../../packages/py-utils
 confluent-kafka
 pydantic
+beautifulsoup4
+requests
+lxml
+recipe-scrapers

@@ -2,7 +2,7 @@ $ErrorActionPreference = 'Stop'
 
 $scriptDir = Split-Path -Parent $MyInvocation.MyCommand.Path
 $eventsDir = '..\common\events'
-$pyUtilsDir = '..\py-utils\src\schema'
+$pyUtilsDir = '..\py-utils\src\py_utils\schema'
 
 if (-not (Test-Path $eventsDir)) {
     New-Item -ItemType Directory -Path $eventsDir -Force | Out-Null
