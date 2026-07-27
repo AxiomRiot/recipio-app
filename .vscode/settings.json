@@ -3,6 +3,14 @@
   "prettier.enable": true,
   "editor.formatOnSave": false,
 
+  // Use pnpm and auto-detect working directories for monorepos
+  "eslint.packageManager": "pnpm",
+  "eslint.workingDirectories": [
+    {
+      "mode": "auto"
+    }
+  ],
+
   // Enable eslint for all supported languages
   "eslint.validate": [
     "javascript",

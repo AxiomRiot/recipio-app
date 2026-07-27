@@ -7,18 +7,19 @@ A living reference for every architectural decision made during the design of th
 ## Table of Contents
 
 1. [Project Goals](#project-goals)
-2. [Services Overview](#services-overview)
-3. [Folder Structure](#folder-structure)
-4. [Shared Packages](#shared-packages)
-5. [Kafka Architecture](#kafka-architecture)
-6. [Event Schema](#event-schema)
-7. [Core-API Architecture](#core-api-architecture)
-8. [Scraper Service Architecture](#scraper-service-architecture)
-9. [Gateway and Core-API Interaction](#gateway-and-core-api-interaction)
-10. [Logging](#logging)
-11. [Deployment](#deployment)
-12. [Key Architectural Decisions](#key-architectural-decisions)
-13. [Interview Talking Points](#interview-talking-points)
+2. [Frontend Features](#frontend-features)
+3. [Services Overview](#services-overview)
+4. [Folder Structure](#folder-structure)
+5. [Shared Packages](#shared-packages)
+6. [Kafka Architecture](#kafka-architecture)
+7. [Event Schema](#event-schema)
+8. [Core-API Architecture](#core-api-architecture)
+9. [Scraper Service Architecture](#scraper-service-architecture)
+10. [Gateway and Core-API Interaction](#gateway-and-core-api-interaction)
+11. [Logging](#logging)
+12. [Deployment](#deployment)
+13. [Key Architectural Decisions](#key-architectural-decisions)
+14. [Interview Talking Points](#interview-talking-points)
 
 ---
 
@@ -29,6 +30,13 @@ A living reference for every architectural decision made during the design of th
 - Intentionally complicated in ways that are *load-bearing* (each complexity decision solves a real problem), not decorative
 
 ---
+## Frontend Features
+- User can provide URL for the application to scrape
+- User can create their own recipes manually
+- User can view all recipes via pagination
+- User can filter on recipes by category, ingredients, cuisine
+- User can generate a custom meal plan with random or based on nutritional guidelines 
+- User can generate a grocery list based on user defined recipes or meal plan
 
 ## Services Overview
 
