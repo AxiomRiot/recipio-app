@@ -1,19 +1,29 @@
-import styled from 'styled-components';
+import {
+  Route,
+  BrowserRouter as Router,
+  Routes,
+} from 'react-router-dom';
 import NavBar from '../components/NavBar';
+import GroceryListPage from '../pages/GroceryListPage';
+import HomePage from '../pages/HomePage';
+import MealPlanPage from '../pages/MealPlanPage';
+import NewRecipePage from '../pages/NewRecipePage';
+import RecipesPage from '../pages/RecipesPage';
 import { Theme } from '../theme/Theme';
-
-const AppDiv = styled.div`
-  margin: 0;
-  padding: 0;
-  background: red;
-`;
 
 export default function App() {
   return (
     <Theme>
-      <AppDiv>
+      <Router>
         <NavBar />
-      </AppDiv>
+        <Routes>
+          <Route path="home" element={<HomePage />} />
+          <Route path="new-recipe" element={<NewRecipePage />} />
+          <Route path="recipes" element={<RecipesPage />} />
+          <Route path="meal-plan" element={<MealPlanPage />} />
+          <Route path="grocery-list" element={<GroceryListPage />} />
+        </Routes>
+      </Router>
     </Theme>
   );
 };

@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 const NavBarDiv = styled.div`
@@ -37,26 +38,29 @@ const AddRecipeDiv = styled.div`
   align-items: flex-start;
 `;
 
-const NavButton = styled.button<{ isActive: boolean }>`
+const NavButton = styled(Link)<{ isActive: boolean }>`
   background: none;
   border: none;
   font-family: inherit;
   font-size: 14px;
   cursor: pointer;
-  color:'#E9E7E2';
+  text-decoration: none;
+  color: #E9E7E2;
   opacity: ${props => props.isActive ? 1 : 0.75};
   border-bottom: ${({ theme, isActive }) => isActive ? `2px solid ${theme.colors.highlightYellow}` : 'none'};
 `;
 
-const NewRecipeButton = styled.button`
+const NewRecipeButton = styled(Link)`
   padding: 9px 14px;
   margin-right: 32px;
 
   background-color: ${({ theme }) => theme.colors.urgentRed};
-  color:'#E9E7E2';
+  color: #E9E7E2;
 
   border: none;
   border-radius: 3px;
+
+  text-decoration: none;
 
   cursor: pointer;
 
@@ -64,6 +68,7 @@ const NewRecipeButton = styled.button`
   text-transform: uppercase;
   font-size: 12.5px;
   letter-spacing: 0.06em;
+  font-weight: 600;
 `;
 
 const NAVBAR_DATA = [
@@ -85,11 +90,11 @@ export default function NavBar() {
       <BrandingTitle>Recipio</BrandingTitle>
       <NavBarLinksDiv>
         {NAVBAR_DATA.map((item, index) => (
-          <NavButton key={index} onClick={() => handleOnClick(item.path)} isActive={activeButton === item.path}>{item.text}</NavButton>
+          <NavButton key={index} to={item.path} onClick={() => handleOnClick(item.path)} isActive={activeButton === item.path}>{item.text}</NavButton>
         ))}
       </NavBarLinksDiv>
       <AddRecipeDiv>
-        <NewRecipeButton>New Recipe</NewRecipeButton>
+        <NewRecipeButton to="new-recipe">New Recipe</NewRecipeButton>
       </AddRecipeDiv>
     </NavBarDiv>
   );
